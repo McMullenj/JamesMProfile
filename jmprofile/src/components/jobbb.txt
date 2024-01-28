@@ -1,0 +1,118 @@
+import React, { useEffect, useRef, useState } from 'react';
+import './jobs.css'; // You may need to import your styles
+
+function JobsComponent() {
+  const nextRef = useRef(null);
+  const prevRef = useRef(null);
+  const carouselRef = useRef(null);
+  const timeRef = useRef(null);
+  const arrowLeft = "<";
+  const arrowRight = ">";
+
+  const [sliderItems, setSliderItems] = useState([
+    { id: 1, content: { img: './image/Bankwest.jpg', title: "Bankwest", timeline: "Dec 2022 - Present", role: "Associate Software Developer", description: "desc"}},
+    { id: 2, content: { img: './image/Bankwest.jpg', title: "AAAA", timeline: "Dec 2022 - Present", role: "Associate Software Developer", description: "desc"}},
+    { id: 3, content: { img: './image/Bankwest.jpg', title: "BBB", timeline: "Dec 2022 - Present", role: "Associate Software Developer", description: "desc"}}
+
+  ]);
+
+  const [thumbnailItems, setThumbnailItems] = useState([
+    { id: 1, content: { img: './image/Bankwest.jpg', title: "Bankwest", timeline: "Dec 2022 - Present"}},
+    { id: 2, content: { img: './image/Bankwest.jpg', title: "AAAA", timeline: "Dec 2022 - Present"}},
+    { id: 3, content: { img: './image/Bankwest.jpg', title: "BaBBBnkwest", timeline: "Dec 2022 - Present"}}
+  ]);
+
+  useEffect(() => {
+    let timeRunning = 1000;
+    let timeAutoNext = 10000;
+
+    prevRef.current.onclick = function () {
+      showSlider('prev');
+    };
+
+    nextRef.current.onclick = function () {
+      showSlider('next');
+    };
+
+    let runTimeOut;
+    let runNextAuto = setTimeout(() => {
+      nextRef.current.click();
+    }, timeAutoNext);
+
+    function showSlider(type) {
+        if (type === 'next') {
+            setSliderItems((prevItems) => [
+                ...prevItems,
+                { id: prevItems.length + 1, content: { img: './image/Bankwest.jpg', title: `Item ${prevItems.length + 1}`, timeline: `Dec 2022 - Present`, role: `Role ${prevItems.length + 1}`, description: `Description ${prevItems.length + 1}` } }
+            ]);
+            setThumbnailItems((prevItems) => [
+                ...prevItems,
+                { id: prevItems.length + 1, content: { img: './image/Bankwest.jpg', title: `Item ${prevItems.length + 1}`, timeline: `Dec 2022 - Present` } }
+            ]);
+          carouselRef.current.classList.add('next');
+        } else {
+            setSliderItems((prevItems) => [
+                { id: prevItems.length + 1, content: { img: './image/Bankwest.jpg', title: `Item ${prevItems.length + 1}`, timeline: `Dec 2022 - Present`, role: `Role ${prevItems.length + 1}`, description: `Description ${prevItems.length + 1}` } },
+                ...prevItems
+            ]);
+            setThumbnailItems((prevItems) => [
+                { id: prevItems.length + 1, content: { img: './image/Bankwest.jpg', title: `Item ${prevItems.length + 1}`, timeline: `Dec 2022 - Present` } },
+                ...prevItems
+            ]);
+            carouselRef.current.classList.add('prev');
+        }
+
+      clearTimeout(runTimeOut);
+      runTimeOut = setTimeout(() => {
+        carouselRef.current.classList.remove('next');
+        carouselRef.current.classList.remove('prev');
+      }, timeRunning);
+
+      clearTimeout(runNextAuto);
+      runNextAuto = setTimeout(() => {
+        nextRef.current.click();
+      }, timeAutoNext);
+    }
+  }, []);
+
+  return (
+    <div className="carousel" ref={carouselRef}>
+        <div className="list">
+            {sliderItems.map((item) => (
+                <div key={item.id} className="item">
+                    <img src={item.content.img} alt={item.content.title} />
+                    <div className="content">
+                        <div className='timeline'>{item.content.timeline}</div>
+                        <div className='title'>{item.content.title}</div>
+                        <div className='role'>{item.content.role}</div>
+                        <div className='description'>{item.content.description}</div>
+                    </div>
+                </div> 
+            ))}
+        </div>
+        <div className="thumbnail">
+            {thumbnailItems.map((item) => (
+                <div key={item.id} className="item">
+                    <img src={item.content.img} alt={item.content.title} />
+                    <div className='content'>
+                        <div className='title'>{item.content.title}</div>
+                        <div className='timeline'>{item.content.timeline}</div>
+                    </div>
+                </div> 
+            ))}
+        </div>
+        <div className="arrows">
+            <button id="prev" ref={prevRef}>
+                {arrowLeft}
+            </button>
+            <button id="next" ref={nextRef}>
+                {arrowRight}
+            </button>
+        </div>
+
+        <div className="time" ref={timeRef}></div>
+    </div>
+  );
+}
+
+export default JobsComponent;
