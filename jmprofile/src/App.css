@@ -22,15 +22,3 @@ h2 {
 p {
   color: black;
 }
-/* ... (existing styles) */
-
-.Mobile-nav {
-  display: block; /* Display the hamburger on smaller screens */
-}
-
-.Hamburger {
-  font-size: 24px;
-  cursor: pointer;
-}
-
-/* ... (existing styles) */
