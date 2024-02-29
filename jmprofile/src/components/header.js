@@ -17,8 +17,7 @@ const Header = () => {
 
     return (
         <div id="header" className={isStickyDown ? 'sticky' : ''}>
-            <h1>James McMullen</h1>
-            <p>Software Developer</p> 
+            <h1>James McMullen</h1> 
         </div>
     );
 };
