@@ -101,7 +101,7 @@ const Carousel = () => {
                 <button onClick={handleNext}>{arrowRight}</button>
             </div>
 
-            <div class="time" ref={timeRef} />
+            {/* <div class="time" ref={timeRef} /> */}
         </div>
     );
 };
