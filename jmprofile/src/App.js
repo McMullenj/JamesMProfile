@@ -1,6 +1,4 @@
 import React from 'react';
-// 
-
 import './App.css';
 import JobsComponent from './components/jobs';
 import Header from './components/header';
