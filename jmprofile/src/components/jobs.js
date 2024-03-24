@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import './jobs.css';
 
 const items = [
@@ -31,7 +31,6 @@ const arrowLeft = "<";
 const arrowRight = ">";
 
 const Carousel = () => {
-    const timeRef = useRef(null);
     const [currentItem, setCurrentItem] = useState(0);
     const [timeRemaining, setTimeRemaining] = useState(timeToSwitch);
 
@@ -100,8 +99,6 @@ const Carousel = () => {
                 <button onClick={handlePrev}>{arrowLeft}</button>
                 <button onClick={handleNext}>{arrowRight}</button>
             </div>
-
-            {/* <div class="time" ref={timeRef} /> */}
         </div>
     );
 };
